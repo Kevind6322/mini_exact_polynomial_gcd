@@ -18,3 +18,10 @@ The library exists because exact polynomial GCD is the kind of thing you keep re
 The trade-off is density: polynomials are stored as a flat list of coefficients, lowest degree first. This is simple and fast enough for modest degrees, but it will not scale to inputs with thousands of terms where a sparse representation would win.
 
 The result is always normalised to be monic (leading coefficient 1), so `gcd(2x+4, 3x+6)` returns `x + 2`, not `2x + 4`. The zero polynomial is represented by an empty coefficient list and has degree `-1`.
+
+## Performance
+
+The window keeps a bounded buffer, so `push` is constant time and memory does not
+grow with the length of the stream. `peak` and `trough` are linear in the window
+size, which is the trade that keeps `push` cheap.
+
